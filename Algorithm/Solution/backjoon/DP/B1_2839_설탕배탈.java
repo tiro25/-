@@ -1,24 +1,24 @@
 import java.util.*;
 
-public class B1_2839_ì„¤íƒ•ë°°íƒˆ {
+class B1_2839_¼³ÅÁ¹èÅ» {
+
+  static int[] dp;
 
   public static void main(String[] args) {
     int n = new Scanner(System.in).nextInt();
-    int[] memo = new int[n+1];
-    memo[3] = 1;
-    if(n>4)
-      memo[5] = 1;
-    for(int i = 6; i <= n; ++i) {
-      if(memo[i-3] == 0 && memo[i-5] == 0)
-        memo[i] = 0;
-      else if(memo[i-3] == 0)
-        memo[i] = memo[i-5]+1;
-      else if(memo[i-5] == 0)
-        memo[i] = memo[i-3]+1;
-      else
-        memo[i] = Math.min(memo[i-3], memo[i-5])+1;
-    }
-    System.out.println(memo[n]==0?-1:memo[n]);
+    dp = new int[n+1];
+    int answer=dp(n);
+    System.out.println(answer>=1<<29?-1:answer);
   }
 
+  static int dp(int n) {
+    if(n < 0)
+      return 1<<29;
+    if(dp[n] != 0)
+      return dp[n];
+    if(n == 3 || n == 5)
+      return dp[n] = 1;
+
+    return dp[n] = Math.min(dp(n-3), dp(n-5))+1;
+  }
 }
